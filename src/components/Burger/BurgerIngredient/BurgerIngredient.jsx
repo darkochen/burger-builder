@@ -10,13 +10,20 @@ class BurgerIngredient extends Component {
         ingredient = <div className={styles['bread-bottom']}></div>;
         break;
       case 'bread-top':
-        ingredient = <div className={styles['bread-top']}></div>;
+        ingredient = 
+          <div className={styles['bread-top']}>
+            <div className={styles['seeds-1']}></div>
+            <div className={styles['seeds-2']}></div>
+          </div>;
         break;
       case 'salad':
         ingredient = <div className={styles['salad']}></div>;
         break;
       case 'cheese':
         ingredient = <div className={styles['cheese']}></div>;
+        break;
+      case 'meat':
+        ingredient = <div className={styles['meat']}></div>;
         break;
       case 'bacon':
         ingredient = <div className={styles['bacon']}></div>;
