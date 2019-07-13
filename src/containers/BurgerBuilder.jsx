@@ -19,6 +19,7 @@ class BurgerBuilder extends PureComponent {
       bacon      : 0,
     },
     totalPrice: 4,
+    purchasable: false,
   };
 
   addIngredientHandler = (type) => {
@@ -34,6 +35,7 @@ class BurgerBuilder extends PureComponent {
       ingredients: updatedIngredient, 
       totalPrice: newPricce,
     });
+    this.updatePurchaseState(updatedIngredient);
   };
 
   removeIngredientHandler = (type) => {
@@ -50,7 +52,15 @@ class BurgerBuilder extends PureComponent {
       ingredients: updatedIngredient, 
       totalPrice: newPricce,
     });
+    this.updatePurchaseState(updatedIngredient);
   };
+
+  updatePurchaseState = (ingredients) => {
+    const sum = Object.keys(ingredients).map((igKey => {
+      return ingredients[igKey];
+    })).reduce((arr, el) => arr + el, 0);
+    this.setState({purchasable: sum > 0});
+  }
   
   render() {
     const disableInfo ={...this.state.ingredients};
@@ -64,6 +74,8 @@ class BurgerBuilder extends PureComponent {
           ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
           disabled={disableInfo}
+          purchasable={this.state.purchasable}
+          price={this.state.totalPrice}
         />
       </Aux>
     );
