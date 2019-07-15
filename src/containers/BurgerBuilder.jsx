@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import Aux from '../hoc/Aux';
 import Burger from '../components/Burger/Burger';
 import BuildControls from '../components/Burger/BuildControls/BuildControls';
+import Modal from '../components/UI/Modal/Modal';
+import OrderSummary from '../components/Burger/OrderSummary/OrderSummary';
 
 const INGREDIENT_PRICE = {
   salad: 0.5,
@@ -20,6 +22,7 @@ class BurgerBuilder extends PureComponent {
     },
     totalPrice: 4,
     purchasable: false,
+    purchasing: false,
   };
 
   addIngredientHandler = (type) => {
@@ -60,7 +63,19 @@ class BurgerBuilder extends PureComponent {
       return ingredients[igKey];
     })).reduce((arr, el) => arr + el, 0);
     this.setState({purchasable: sum > 0});
-  }
+  };
+
+  purchaseHandler = () => {
+    this.setState({purchasing: true});
+  };
+
+  purchaseCancelHandler = () => {
+    this.setState({purchasing: false});
+  };
+
+  purchaseContinueHandler = () => {
+    console.log('click continue');
+  };
   
   render() {
     const disableInfo ={...this.state.ingredients};
@@ -69,6 +84,14 @@ class BurgerBuilder extends PureComponent {
     }
     return (
       <Aux>
+        <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+          <OrderSummary 
+            ingredients={this.state.ingredients}
+            purchaseContinue={this.purchaseContinueHandler}
+            purchaseCancel={this.purchaseCancelHandler}
+            price={this.state.totalPrice}
+          />
+        </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls 
           ingredientAdded={this.addIngredientHandler}
@@ -76,6 +99,7 @@ class BurgerBuilder extends PureComponent {
           disabled={disableInfo}
           purchasable={this.state.purchasable}
           price={this.state.totalPrice}
+          order={this.purchaseHandler}
         />
       </Aux>
     );
