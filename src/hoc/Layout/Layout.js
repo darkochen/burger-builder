@@ -21,14 +21,14 @@ class Layout extends PureComponent {
   render() {
     return (
       <Aux>
-        <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler}/>
+        <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} />
         <SideDrawer
           open={this.state.showSideDrawer}
           closed={this.sideDrawerClosedHandler}
         />
-        <div className={styles['content']}>
+        <main className={styles['content']}>
           {this.props.children}
-        </div>
+        </main>
       </Aux>
     );
   }
